@@ -1551,6 +1551,7 @@ from .yapfiles import YapFilesIE
 from .yesjapan import YesJapanIE
 from .yinyuetai import YinYueTaiIE
 from .ynet import YnetIE
+from .yledl import YleDLIE
 from .youjizz import YouJizzIE
 from .youku import (
     YoukuIE,
