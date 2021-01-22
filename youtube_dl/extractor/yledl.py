@@ -8,7 +8,12 @@ from .common import InfoExtractor
 
 
 class YleDLIE(InfoExtractor):
-    _VALID_URL = r'https?://(?:areena|arenan).yle.fi/(?:audio/)?(?P<id>[0-9]-[0-9]+)'
+    _VALID_URL = r'''(?x) https?://
+                    (?:
+                        # Areena with PID
+                        (?:areena|arenan)\.yle\.fi/(?:audio/)?(?P<id>[0-9]-[0-9]+)|
+                        yle\.fi/.* # Anything else
+                    )'''
     _GEO_COUNTRIES = ['FI']
 
     _TEST = {
@@ -35,16 +40,9 @@ class YleDLIE(InfoExtractor):
         }
     }
 
-    def _real_extract(self, url):
+    def yledl2info(self, yledl):
         props = {}
-
-        # Get essential data
-        props['id'] = self._match_id(url)
-
-        cp = subprocess.run(["yle-dl", "-q", "--showmetadata", url], capture_output=True, encoding='utf-8')
-        cp.check_returncode()
-        yledl = json.loads(cp.stdout)[0]
-
+        props['id'] = yledl['program_id']
         props['title'] = yledl.get('title', '<none>')
         description = yledl.get('description', None)
         if description:
@@ -71,5 +69,17 @@ class YleDLIE(InfoExtractor):
                 'protocol': 'm3u8',
             })
         props['formats'] = formats
-
         return props
+
+    def _real_extract(self, url):
+        idmatch = self._match_id(url)
+
+        cp = subprocess.run(["yle-dl", "-q", "--showmetadata", url], capture_output=True, encoding='utf-8')
+        cp.check_returncode()
+        ylist = json.loads(cp.stdout)
+
+        if len(ylist) > 1:
+            entries = [self.yledl2info(d) for d in ylist]
+            return {'_type': 'playlist', 'entries': entries}
+        else:
+            return self.yledl2info(ylist[0])
