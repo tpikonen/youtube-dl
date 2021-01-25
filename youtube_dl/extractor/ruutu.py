@@ -234,7 +234,7 @@ class RuutuIE(InfoExtractor):
 
 
 class HSfiIE(InfoExtractor):
-    _VALID_URL = r'https?://(?:www\.)?hs\.fi/.*/art-(?P<id>\d+).html'
+    _VALID_URL = r'https?://(?:www\.)?hs\.fi/[^/]+/art-(?P<id>\d+).html'
     _TESTS = [
         {
             'url': 'https://www.hs.fi/talous/art-2000006643659.html',
@@ -243,7 +243,7 @@ class HSfiIE(InfoExtractor):
                 'id': '3692175',
                 'ext': 'mp4',
                 'title': 'Airbusin konseptivideo kolmesta uudesta vetylentokoneesta',
-                'thumbnail': r're:^https?://.*\.jpg$',
+                'thumbnail': r're:^https?://.+\.jpg$',
                 'duration': 50,
                 'age_limit': 0,
                 'upload_date': '20200921',
