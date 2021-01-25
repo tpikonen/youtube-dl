@@ -237,16 +237,16 @@ class HSfiIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?hs\.fi/[^/]+/art-(?P<id>\d+).html'
     _TESTS = [
         {
-            'url': 'https://www.hs.fi/talous/art-2000006643659.html',
-            'md5': 'efcf7094ae0b492716a2faa176a66b7b',
+            'url': 'https://www.hs.fi/politiikka/art-2000007761258.html',
+            'md5': '63231668b42cbfcbed99f0b8cda76954',
             'info_dict': {
-                'id': '3692175',
+                'id': '3773692',
                 'ext': 'mp4',
-                'title': 'Airbusin konseptivideo kolmesta uudesta vetylentokoneesta',
+                'title': 'Ministeri Kiuru esittelee hallituksen päivitetyt toimenpiteet koronaepidemian hillintään (25.1.21)',
                 'thumbnail': r're:^https?://.+\.jpg$',
-                'duration': 50,
+                'duration': 607,
                 'age_limit': 0,
-                'upload_date': '20200921',
+                'upload_date': '20210125',
             },
         },
     ]
